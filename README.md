@@ -52,6 +52,62 @@ You can then later update library using composer:
 composer.phar update
 ```
 
+## Configuration
+
+To use the CoinPayments library, you need to set up your credentials. The `CoinPayments` class constructor requires four parameters: `merchantID`, `publicKey`, `privateKey`, and `ipnSecret`.
+
+```php
+use Sigismund\CoinPayments\CoinPayments;
+
+$merchantID = 'your-merchant-id';
+$publicKey = 'your-public-key';
+$privateKey = 'your-private-key';
+$ipnSecret = 'your-ipn-secret';
+
+$coinPaymentsAPI = new CoinPayments($merchantID, $publicKey, $privateKey, $ipnSecret);
+```
+
+## Usage
+
+Once you have configured your credentials, you can use the `CoinPayments` class to interact with the CoinPayments API. Here are some examples:
+
+### Get Conversion Rates
+
+```php
+$rates = $coinPaymentsAPI->getRates();
+```
+
+### Create a Transaction
+
+```php
+$amount = 16.00;
+$currencyIn = 'USD';
+$currencyOut = 'BTC';
+$additional = [];
+
+$transaction = $coinPaymentsAPI->createTransaction($amount, $currencyIn, $currencyOut, $additional);
+```
+
+### Get Basic Account Info
+
+```php
+$basicInfo = $coinPaymentsAPI->getBasicInfo();
+```
+
+## API Commands
+
+The `Commands` class defines the available API commands. Here is a list of the commands:
+
+* `Commands::CREATE_TRANSACTION`
+* `Commands::CREATE_TRANSFER`
+* `Commands::CREATE_WITHDRAWAL`
+* `Commands::GET_TX_INFO`
+* `Commands::BALANCES`
+* `Commands::RATES`
+* `Commands::GET_CALLBACK_ADDRESS`
+* `Commands::BASIC_INFO`
+* `Commands::GET_DEPOSIT_ADDRESS`
+* `Commands::GET_TX_IDS`
 
 ## Testing
 ... all pull requests are welcome ;)
@@ -79,5 +135,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 * Hat tip to anyone who's code was used
 * Inspiration
 * etc
-
-
