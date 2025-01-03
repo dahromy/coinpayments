@@ -56,7 +56,7 @@ class ApiCall
     {
         $this->getAgent()->setQuerySignature($this->generateQuerySignature());
         $this->getAgent()->setQueryString($this->getQueryString());
-        $this->getAgent()->execute();
+        $this->response = $this->getAgent()->execute();
     }
 
 

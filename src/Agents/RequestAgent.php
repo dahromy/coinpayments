@@ -38,7 +38,7 @@ abstract class RequestAgent
      */
     public function execute()
     {
-        $this->query();
+        $this->rawResponse = $this->query();
         return $this->handleResponse();
     }
 
@@ -60,9 +60,9 @@ abstract class RequestAgent
         if (PHP_INT_SIZE < 8) {
             // We are on 32-bit PHP, so use the bigint as string option.
             // If you are using any API calls with Satoshis it is highly NOT recommended to use 32-bit PHP
-            $this->response = json_decode($this->getRawResponse(), true, 512, JSON_BIGINT_AS_STRING);
+            $this->response = json_decode($this->rawResponse, true, 512, JSON_BIGINT_AS_STRING);
         } else {
-            $this->response = json_decode($this->getRawResponse(), true);
+            $this->response = json_decode($this->rawResponse, true);
         }
         if ($this->response !== null && count($this->response)) {
             return $this->response;
