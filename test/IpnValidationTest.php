@@ -61,4 +61,25 @@ class IpnValidationTest extends TestCase
         $this->ipnValidation->checkOrderSuccess();
     }
 
+    public function testJsonResponseHandling()
+    {
+        $postData = [
+            'ipn_id' => '4G34GQ44340I',
+            'ipn_mode' => 'hmac',
+            'merchant' => 'FG453GH5H5H',
+            'status' => 0,
+            'status_text' => 'Successful payment'
+        ];
+
+        $this->initCredentials();
+        $this->ipnValidation = new IpnValidation($postData, [12], $this->credentials);
+
+        $rawResponse = '{"status":1,"status_text":"Success"}';
+        $this->ipnValidation->setPostData(['rawResponse' => $rawResponse]);
+
+        $response = $this->ipnValidation->getPostData('rawResponse');
+        $this->assertJson($response);
+        $this->assertArrayHasKey('status', json_decode($response, true));
+        $this->assertArrayHasKey('status_text', json_decode($response, true));
+    }
 }
